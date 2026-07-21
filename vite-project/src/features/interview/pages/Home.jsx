@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import "../style/home.scss";
 import { useInterview } from "../hooks/useInterview";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { FaCircleNotch } from "react-icons/fa";
+import { useAuth } from "../../auth/hooks/useAuth";
 
 const Home = () => {
     const { loading, generateReport, reports = [] } = useInterview();
+    const { handleLogout } = useAuth();
     const [jobDescription, setJobDescription] = useState("");
     const [selfDescription, setSelfDescription] = useState("");
     const [fileName, setFileName] = useState("");
@@ -44,7 +46,23 @@ const Home = () => {
     }
 
     return (
-        <main className="home-page">
+        <main className="home-page" style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', display: 'flex', gap: '0.75rem' }}>
+                <Link
+                    to="/bug-report"
+                    className="button"
+                    style={{ padding: '0.5rem 1rem', background: 'transparent', color: '#bb6bd9', border: '1px solid #bb6bd9', borderRadius: '0.5rem', cursor: 'pointer', textDecoration: 'none', fontSize: '0.9rem' }}
+                >
+                    🐛 Report Bug
+                </Link>
+                <button
+                    onClick={handleLogout}
+                    className="button"
+                    style={{ padding: '0.5rem 1rem', background: 'transparent', color: '#ff2d78', border: '1px solid #ff2d78', borderRadius: '0.5rem', cursor: 'pointer' }}
+                >
+                    Logout
+                </button>
+            </div>
             <div className="page-header">
                 <h1>Interview Strategy Generator</h1>
                 <p>Provide the job description, your resume, and a brief self-description to generate a tailored interview preparation plan.</p>

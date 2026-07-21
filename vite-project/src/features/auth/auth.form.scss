@@ -79,6 +79,18 @@ main {
                     border-color: #ff2d78; // accent color
                     box-shadow: 0 0 0 3px rgba(255, 45, 120, 0.15);
                 }
+
+                // Prevent Chrome autofill from turning inputs white
+                &:-webkit-autofill,
+                &:-webkit-autofill:hover,
+                &:-webkit-autofill:focus,
+                &:-webkit-autofill:active {
+                    -webkit-text-fill-color: #e6edf3 !important;
+                    -webkit-box-shadow: 0 0 0px 1000px #1e2535 inset !important;
+                    box-shadow: 0 0 0px 1000px #1e2535 inset !important;
+                    background-color: #1e2535 !important;
+                    transition: background-color 5000s ease-in-out 0s;
+                }
             }
 
             .password-toggle {
@@ -100,6 +112,17 @@ main {
             &.has-toggle input {
                 padding-right: 2.5rem;
             }
+
+            input.input-error {
+                border-color: #ff2d78;
+                box-shadow: 0 0 0 3px rgba(255, 45, 120, 0.15);
+            }
+        }
+
+        .error-message {
+            font-size: 0.8rem;
+            color: #ff2d78;
+            margin-top: -0.25rem;
         }
     }
 
@@ -132,6 +155,189 @@ main {
         h1 {
             font-size: 1.5rem;
             font-weight: 600;
+        }
+    }
+
+    .auth-error {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background-color: rgba(255, 45, 120, 0.08);
+        border: 1px solid rgba(255, 45, 120, 0.25);
+        border-radius: 0.5rem;
+        color: #ff6b9d;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        animation: shakeIn 0.3s ease-out;
+
+        .auth-error__icon {
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+    }
+
+    @keyframes shakeIn {
+        0% { transform: translateX(-8px); opacity: 0; }
+        50% { transform: translateX(4px); }
+        100% { transform: translateX(0); opacity: 1; }
+    }
+
+    // ── Success hint ──────────────────────────────────────────────────────
+    .success-hint {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.78rem;
+        color: #2ecc71;
+        margin-top: -0.15rem;
+    }
+
+    // ── Password Strength ─────────────────────────────────────────────────
+    .password-strength {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.25rem;
+
+        &__bar {
+            flex: 1;
+            height: 4px;
+            background-color: #2a3348;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        &__fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        &__label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            white-space: nowrap;
+            min-width: 70px;
+            text-align: right;
+        }
+    }
+
+    // ── Password Rules ────────────────────────────────────────────────────
+    .password-rules {
+        list-style: none;
+        padding: 0;
+        margin: 0.25rem 0 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.2rem 0.75rem;
+
+        &__item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            color: #7d8590;
+            transition: color 0.2s;
+
+            &--pass {
+                color: #2ecc71;
+            }
+        }
+    }
+
+    // ── Step Indicator ────────────────────────────────────────────────────
+    .register-steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin-bottom: 0.5rem;
+
+        &__item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+
+            &--active {
+                opacity: 1;
+            }
+        }
+
+        &__number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: #2a3348;
+            color: #7d8590;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+
+            .register-steps__item--active & {
+                background-color: #ff2d78;
+                color: #fff;
+            }
+        }
+
+        &__label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #7d8590;
+
+            .register-steps__item--active & {
+                color: #e6edf3;
+            }
+        }
+
+        &__line {
+            width: 60px;
+            height: 2px;
+            margin: 0 0.75rem;
+            border-radius: 2px;
+            transition: background-color 0.3s;
+        }
+    }
+
+    // ── OR Divider ────────────────────────────────────────────────────────
+    .register-divider {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 0.25rem 0;
+
+        &__line {
+            flex: 1;
+            height: 1px;
+            background-color: #2a3348;
+        }
+
+        &__text {
+            color: #7d8590;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+    }
+
+    // ── Text Link Button ──────────────────────────────────────────────────
+    .text-link-btn {
+        background: none;
+        border: none;
+        color: #ff2d78;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0.25rem 0;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #ff6b9d;
+            text-decoration: underline;
         }
     }
 }
